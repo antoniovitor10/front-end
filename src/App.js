@@ -4,19 +4,23 @@ import './App.css';
 
 
 function App() {
+  //função para reeber os valores do formulário
   function onSubmit(values, actions) {
     console.log('SUBMIT', values);
   }
 
+  //Função pra obter o valor do cep, quando o usuário clicar fora do campo 
   function onBlurCep(ev, setFieldValue) {
     const { value } = ev.target;
-
+    
+    //definição da variável cep para que só interprete números
     const cep = value?.replace(/[^0-9]/g, '');
 
+    //definição para que a variável só interprete se tiver 8 números
     if (cep?.length !== 8) {
       return;
     }
-
+    //buscando dados na api 
     fetch(`http://localhost:4567/${cep}`)
       .then((res) => res.json())
       .then((data) => {
@@ -32,6 +36,7 @@ function App() {
       <Formik
         onSubmit={onSubmit}
         validateOnMount
+        // Valores iniciais
         initialValues={{
           cep: '',
           logradouro: '',
@@ -42,6 +47,7 @@ function App() {
           uf: '',
         }}
         render={({ isValid, setFieldValue }) => (
+          //Campos do formulário 
           <Form>
             <div>
               <h1 className='h1'>
@@ -52,7 +58,7 @@ function App() {
               
               
               <Field placeholder="Insira seu Cep" name="cep" type="text" required onBlur={(ev) => onBlurCep(ev, setFieldValue)} />
-              <button type="submit" disabled={!isValid}>Descobrir Endereço</button>
+              
             </div>
             <div className="form-control-group">
               <label>Logradouro</label>
