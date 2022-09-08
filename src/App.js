@@ -58,7 +58,7 @@ function App() {
               
               
               <Field placeholder="Insira seu Cep" name="cep" type="text" required onBlur={(ev) => onBlurCep(ev, setFieldValue)} />
-              
+              <button type="submit" disabled={!isValid}>Descobrir Endereço</button>
             </div>
             <div className="form-control-group">
               <label>Logradouro</label>
